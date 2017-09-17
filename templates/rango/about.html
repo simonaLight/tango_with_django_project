@@ -1,0 +1,18 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    About
+{% endblock %}
+{% block body_block %}
+    <h1>Rango say...</h1>
+    <p> visits: {{ visits }}</p>
+    <p> last_visit: {{ last_visit }}</p>
+    <div>
+        <strong>{{ boldmessage }}</strong>
+    </div>
+    <div>
+        <img src="{{ MEDIA_URL }}cat.jpg">
+    </div>
+{% endblock %}
+

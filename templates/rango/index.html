@@ -1,0 +1,48 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Index
+{% endblock %}
+{% block body_block %}
+    <h1>Rango say....</h1>
+    <div>
+        {% if user.is_authenticated %}
+            howdy {{ user.username }}!
+            <p> visits: {{ visits }}</p>
+            <p> last_visit: {{ last_visit }}</p>
+        {% else %}
+            hey there partner!
+        {% endif %}
+
+    </div>
+    <div>
+        <strong>Most Liked Categories</strong>
+        <ul>
+            {% if categories %}
+                {% for category in categories %}
+                    <li><a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a></li>
+                {% endfor %}
+            {% else %}
+                <strong>There are no categories present.</strong>
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        <strong>Most Viewed Pages</strong>
+        <ul>
+            {% if pages %}
+                {% for page in pages %}
+                    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            {% else %}
+                <strong>There are no pages exist.</strong>
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        <img src="{% static 'images/l.jpg' %}"
+             alt="picture of rango"/>
+    </div>
+{% endblock %}
+
