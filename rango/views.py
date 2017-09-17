@@ -174,9 +174,9 @@ def add_page(request, category_name_slug):
 #     logout(request)
 #     return HttpResponseRedirect(reverse('rango:index'))
 
-class MyRegistrationView(RegistrationView):
-    def get_success_url(self, user):
-        return '/rango/'
+# class MyRegistrationView(RegistrationView):
+#     def get_success_url(self, user):
+#         return '/rango/'
 
 
 
