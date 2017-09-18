@@ -19,7 +19,7 @@
 {#          rel="stylesheet">#}
 </head>
 <body>
-<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+<nav class="navbar navbar-expand-md navbar-dark nabar-fixed-top bg-dark" >
     <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
             aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
@@ -29,7 +29,7 @@
     </button>
     <a class="navbar-brand" href="#">Rango</a>
     <div id="navbar">
-        <nav class="nav navbar-nav pull-xs-left">
+        <nav class="nav navbar-nav">
             <a class="nav-item nav-link" href="{% url 'rango:index' %}">Home</a>
             <a class="nav-item nav-link" href="{% url 'rango:about' %}">About</a>
             {#            <a class="nav-item nav-link" href="{% url 'search' %}">Search</a>#}
@@ -60,13 +60,13 @@
 </div>
 <!-- Bootstrap core JavaScript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-{#<script#}
-{#        src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>#}
+<script
+        src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script
         src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-{#<script#}
-{#        src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">#}
-{#</script>#}
+<script
+        src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js">
+</script>
 </body>
 </html>
