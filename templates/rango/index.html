@@ -13,9 +13,9 @@
         <div class="col-lg-6"><h4>Most Liked Categories</h4>
             <p>
                 {% if categories %}
-                    <ul>
+                    <ul >
                         {% for category in categories %}
-                            <li><a href="{% url 'rango:show_category' category.slug %}">
+                            <li ><a href="{% url 'rango:show_category' category.slug %}">
                                 {{ category.name }}</a></li> {% endfor %}
                     </ul>
                 {% else %}
@@ -26,9 +26,9 @@
             <h4>Most Viewed Pages</h4>
             <p>
                 {% if pages %}
-                    <ul>
+                    <ul >
                         {% for page in pages %}
-                            <li><a href="{{ page.url }}">{{ page.title }}</a></li> {% endfor %}
+                            <li ><a href="{{ page.url }}">{{ page.title }}</a></li> {% endfor %}
                     </ul>
                 {% else %}
                     <strong>There are no categories present.</strong>
