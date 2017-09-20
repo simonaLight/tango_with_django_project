@@ -151,7 +151,7 @@ LOGIN_REDIRECT_URL = '/rango/'
 #  and are trying to access pages requiring authentication
 LOGIN_URL = '/accounts/login/'
 
-SIMPLE_BACKEND_REDIRECT_URL = '/rango/'
+SIMPLE_BACKEND_REDIRECT_URL = '/rango/profile_registration/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -161,4 +161,3 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-

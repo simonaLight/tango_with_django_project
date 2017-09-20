@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-from registration.backends.simple.views import RegistrationView
+from registration.backends.default.views import RegistrationView
 from datetime import datetime
 
 
@@ -23,10 +23,10 @@ def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
     last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
-    print(visits)
-    print(last_visit_time)
+    # print(visits)
+    # print(last_visit_time)
     if (datetime.now() - last_visit_time).seconds > 0:
-        print((datetime.now() - last_visit_time).seconds)
+        # print((datetime.now() - last_visit_time).seconds)
         visits = visits + 1
         # response.set_cookie('last_visit', str(datetime.now()))
         request.session['last_visit'] = str(datetime.now())
@@ -72,7 +72,7 @@ def show_category(request, category_name_slug):
     context_dict = {}
     try:
         category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category).order_by('-views')
         context_dict['pages'] = pages
         context_dict['category'] = category
     except Category.DoesNotExist:
@@ -174,12 +174,44 @@ def add_page(request, category_name_slug):
 #     logout(request)
 #     return HttpResponseRedirect(reverse('rango:index'))
 
-# class MyRegistrationView(RegistrationView):
-#     def get_success_url(self, user):
-#         return '/rango/'
-
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return HttpResponseRedirect(reverse('rango:about'))
 
 
 @login_required
 def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
+
+
+def track_url(request):
+    page_id = None
+    url = '/rango/'
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            print(page_id)
+            try:
+                page = Page.objects.get(id=page_id)
+                print(page)
+                page.views = page.views + 1
+                page.save()
+                url = page.url
+            except Exception:
+                pass
+        return redirect(url)
+
+@login_required
+def profile_registration(request):
+    userprofileform = UserProfileForm()
+    if request.method == 'POST':
+        userprofileform = UserProfileForm(request.POST, request.FILES)
+        if userprofileform.is_valid():
+            user_profile = userprofileform.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('rango:index')
+        else:
+            print(userprofileform.errors)
+    context_dict = {'form': userprofileform}
+    return render(request, 'rango/profile_registration.html', context_dict)
