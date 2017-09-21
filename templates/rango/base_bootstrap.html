@@ -16,7 +16,7 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %} " rel="stylesheet">
     <link href="{% static 'bootstrap/css/bootstrap-grid.css' %} " rel="stylesheet">
     <!-- Custom styles for this template -->
-{#    <link href="{% static 'bootstrap/css/dashboard.css' %}" rel="stylesheet">#}
+    {#    <link href="{% static 'bootstrap/css/dashboard.css' %}" rel="stylesheet">#}
     <link href="{% static 'bootstrap/css/signin.css' %}"
           rel="stylesheet">
 </head>
@@ -38,6 +38,8 @@
                 <a class="nav-item nav-link"
                    href="{% url 'rango:add_category' %}"> Add a New Category</a>
                 <a class="nav-item nav-link"
+                   href="{% url 'rango:profile' user.username%}">Profile</a>
+                <a class="nav-item nav-link"
                    href="{% url 'auth_password_change' %}">Change Password</a>
                 <a class="nav-item nav-link"
                    href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
@@ -48,10 +50,10 @@
             {% endif %}
         </nav>
     </div>
-        <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+    <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
 <div class="container-fluid">
     <div class="row">

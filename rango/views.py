@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from rango.models import Category, Page
+from rango.models import Category, Page, User, UserProfile
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -201,6 +201,7 @@ def track_url(request):
                 pass
         return redirect(url)
 
+
 @login_required
 def profile_registration(request):
     userprofileform = UserProfileForm()
@@ -215,3 +216,23 @@ def profile_registration(request):
             print(userprofileform.errors)
     context_dict = {'form': userprofileform}
     return render(request, 'rango/profile_registration.html', context_dict)
+
+
+def profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return redirect('rango:index')
+
+    userprofile = UserProfile.objects.get_or_create(user=user)[0]
+    print(userprofile)
+    form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
+    print(form)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('rango:profile', user.username)
+        else:
+            print(form.errors)
+    return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
