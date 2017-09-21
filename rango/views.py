@@ -218,6 +218,7 @@ def profile_registration(request):
     return render(request, 'rango/profile_registration.html', context_dict)
 
 
+@login_required
 def profile(request, username):
     try:
         user = User.objects.get(username=username)
@@ -236,3 +237,10 @@ def profile(request, username):
         else:
             print(form.errors)
     return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+def list_profiles(request):
+    userprofile_list = User.objects.all()
+    print(userprofile_list)
+    return render(request, 'rango/list_profile.html', {'userprofile_list': userprofile_list})
+

@@ -40,6 +40,8 @@
                 <a class="nav-item nav-link"
                    href="{% url 'rango:profile' user.username%}">Profile</a>
                 <a class="nav-item nav-link"
+                   href="{% url 'rango:list_profile'%}">List UserProfiles</a>
+                <a class="nav-item nav-link"
                    href="{% url 'auth_password_change' %}">Change Password</a>
                 <a class="nav-item nav-link"
                    href="{% url 'auth_logout' %}?next=/rango/">Logout</a>
