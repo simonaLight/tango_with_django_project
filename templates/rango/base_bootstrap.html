@@ -38,9 +38,9 @@
                 <a class="nav-item nav-link"
                    href="{% url 'rango:add_category' %}"> Add a New Category</a>
                 <a class="nav-item nav-link"
-                   href="{% url 'rango:profile' user.username%}">Profile</a>
+                   href="{% url 'rango:profile' user.username %}">Profile</a>
                 <a class="nav-item nav-link"
-                   href="{% url 'rango:list_profile'%}">List UserProfiles</a>
+                   href="{% url 'rango:list_profile' %}">List UserProfiles</a>
                 <a class="nav-item nav-link"
                    href="{% url 'auth_password_change' %}">Change Password</a>
                 <a class="nav-item nav-link"
@@ -72,7 +72,9 @@
 <!-- Bootstrap core JavaScript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script
-        src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+        src="{% static 'bootstrap/js/jquery-3.2.1.min.js' %}"></script>
+<script
+        src="{% static 'bootstrap/js/rango-jquery.js' %}"></script>
 <script
         src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

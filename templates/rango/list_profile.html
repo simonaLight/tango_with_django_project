@@ -20,16 +20,23 @@
                                         {{ listuser.username }}</a>
                                     {% if listuser.username == user.username %}
                                         <a href="#">
-                                        <button style="float: right" class="btn btn-primary">Not Delete</button>
-                                    </a>
+                                            <button style="float: right" class="btn btn-primary">Not Delete</button>
+                                        </a>
                                     {% else %}
-                                    <a href="{% url 'rango:user_delete' listuser.username %}">
-                                        <button style="float: right" class="btn btn-primary">Delete</button>
-                                    </a>
+                                        <a href="{% url 'rango:user_delete' listuser.username %}">
+                                            <button style="float: right" class="btn btn-primary">Delete</button>
+                                        </a>
                                     {% endif %}
                                 </h4>
+                                {% for item in profile_list %}
+                                    {% if item.user.username == listuser.username %}
+                                        <img src="{{ MEDIA_URL }}{{ item.picture }}" width="64" height="64"
+                                             alt="{{ listuser.username }}">
+                                    {% endif %}
+                                {% endfor %}
                             </div>
-                        {% endfor %} </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         {% else %}

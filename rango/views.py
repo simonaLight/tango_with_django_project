@@ -245,13 +245,13 @@ def profile(request, username):
 def list_profiles(request):
     userprofile_list = User.objects.all()
     print(userprofile_list)
-
-    return render(request, 'rango/list_profile.html', {'userprofile_list': userprofile_list})
+    profile_list = UserProfile.objects.all()
+    print(profile_list)
+    return render(request, 'rango/list_profile.html',
+                  {'userprofile_list': userprofile_list, 'profile_list': profile_list})
 
 
 def user_delete(request, username):
     user = User.objects.get(username=username)
     user.delete()
     return redirect('rango:list_profile')
-
-
