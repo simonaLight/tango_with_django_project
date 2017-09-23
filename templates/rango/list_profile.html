@@ -17,7 +17,17 @@
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">
                                     <a href="{% url 'rango:profile' listuser.username %}">
-                                        {{ listuser.username }}</a></h4>
+                                        {{ listuser.username }}</a>
+                                    {% if listuser.username == user.username %}
+                                        <a href="#">
+                                        <button style="float: right" class="btn btn-primary">Not Delete</button>
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'rango:user_delete' listuser.username %}">
+                                        <button style="float: right" class="btn btn-primary">Delete</button>
+                                    </a>
+                                    {% endif %}
+                                </h4>
                             </div>
                         {% endfor %} </div>
                 </div>

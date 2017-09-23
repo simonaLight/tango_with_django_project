@@ -174,9 +174,9 @@ def add_page(request, category_name_slug):
 #     logout(request)
 #     return HttpResponseRedirect(reverse('rango:index'))
 
-class MyRegistrationView(RegistrationView):
-    def get_success_url(self, user):
-        return HttpResponseRedirect(reverse('rango:about'))
+# class MyRegistrationView(RegistrationView):
+#     def get_success_url(self, user):
+#         return HttpResponseRedirect(reverse('rango:about'))
 
 
 @login_required
@@ -188,6 +188,7 @@ def track_url(request):
     page_id = None
     url = '/rango/'
     if request.method == 'GET':
+        print(request)
         if 'page_id' in request.GET:
             page_id = request.GET['page_id']
             print(page_id)
@@ -227,6 +228,7 @@ def profile(request, username):
 
     userprofile = UserProfile.objects.get_or_create(user=user)[0]
     print(userprofile)
+    print(type(userprofile))
     form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
     print(form)
     if request.method == 'POST':
@@ -239,8 +241,17 @@ def profile(request, username):
     return render(request, 'rango/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
 
 
+@login_required
 def list_profiles(request):
     userprofile_list = User.objects.all()
     print(userprofile_list)
+
     return render(request, 'rango/list_profile.html', {'userprofile_list': userprofile_list})
+
+
+def user_delete(request, username):
+    user = User.objects.get(username=username)
+    user.delete()
+    return redirect('rango:list_profile')
+
 
