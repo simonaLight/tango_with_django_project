@@ -251,7 +251,25 @@ def list_profiles(request):
                   {'userprofile_list': userprofile_list, 'profile_list': profile_list})
 
 
+@login_required
 def user_delete(request, username):
     user = User.objects.get(username=username)
     user.delete()
     return redirect('rango:list_profile')
+
+
+@login_required
+def like_category(request):
+    cat_id = None
+    print(request)
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+    print(cat_id)
+    likes = 0
+    if cat_id:
+        cat = Category.objects.get(id=int(cat_id))
+        if cat:
+            likes = cat.likes + 1
+            cat.likes = likes
+            cat.save()
+    return HttpResponse(likes)
