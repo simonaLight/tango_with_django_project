@@ -16,7 +16,17 @@
                     <ul class="list-group">
                         {% for category in categories %}
                             <li class="list-group-item"><a href="{% url 'rango:show_category' category.slug %}">
-                                {{ category.name }}</a></li> {% endfor %}
+                                {{ category.name }}</a>
+                                {% if category.likes > 1 %}
+                                    <span class="badge badge-pill badge-primary"
+                                          style="float: right">{{ category.likes }} likes</span>
+                                {% elif category.likes == 1 %}
+                                    <span class="badge badge-pill badge-primary"
+                                          style="float: right">{{ category.likes }} like</span>
+                                {% elif category.likes == 0 %}
+                                    <span class="badge badge-pill badge-primary" style="float: right">0 like</span>
+                                {% endif %}
+                            </li> {% endfor %}
                     </ul>
                 {% else %}
                     <strong>There are no categories present.</strong> {% endif %}
@@ -28,7 +38,14 @@
                 {% if pages %}
                     <ul class="list-group">
                         {% for page in pages %}
-                            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li> {% endfor %}
+                            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a>
+                                {% if page.views > 1 %}
+                                    <span class="badge badge-pill badge-primary" style="float: right">{{ page.views }} views</span>
+                                {% elif page.views == 1 %}
+                                    <span class="badge badge-pill badge-primary" style="float: right">{{ page.views }} view</span>
+                                {% elif page.views == 0 %}
+                                    <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
+                                {% endif %}</li> {% endfor %}
                     </ul>
                 {% else %}
                     <strong>There are no categories present.</strong>
