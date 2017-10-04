@@ -25,17 +25,31 @@ class Page(models.Model):
     title = models.CharField(max_length=128)
     url = models.URLField(max_length=200)
     views = models.IntegerField(default=0)
-    
+    content = models.TextField()
+    # pub_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
 
+# class Article(models.Model):
+#     category = models.ForeignKey(Category)
+#     title = models.CharField('标题', max_length=200, unique=True)
+#     body = models.TextField('正文')
+#     created_time = models.DateTimeField('创建时间', auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.title
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.user.username
+
+
+# class Comment(models.Model):
+

@@ -4,48 +4,56 @@
     Index
 {% endblock %}
 {% block body_block %}
-    <div class="row marketing">
-        <div class="col-lg-6"><h4>Most Liked Categories</h4>
-            <p>
-                {% if categories %}
-                    <ul class="list-group">
-                        {% for category in categories %}
-                            <li class="list-group-item"><a href="{% url 'rango:show_category' category.slug %}">
-                                {{ category.name }}</a>
-                                {% if category.likes > 1 %}
-                                    <span class="badge badge-pill badge-primary"
-                                          style="float: right">{{ category.likes }} likes</span>
-                                {% elif category.likes == 1 %}
-                                    <span class="badge badge-pill badge-primary"
-                                          style="float: right">{{ category.likes }} like</span>
-                                {% elif category.likes == 0 %}
-                                    <span class="badge badge-pill badge-primary" style="float: right">0 like</span>
-                                {% endif %}
-                            </li> {% endfor %}
-                    </ul>
-                {% else %}
-                    <strong>There are no categories present.</strong> {% endif %}
-            </p>
-        </div>
-        <div class="col-lg-6">
-            <h4>Most Viewed Pages</h4>
-            <p>
-                {% if pages %}
-                    <ul class="list-group">
-                        {% for page in pages %}
-                            <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a>
-                                {% if page.views > 1 %}
-                                    <span class="badge badge-pill badge-primary" style="float: right">{{ page.views }} views</span>
-                                {% elif page.views == 1 %}
-                                    <span class="badge badge-pill badge-primary" style="float: right">{{ page.views }} view</span>
-                                {% elif page.views == 0 %}
-                                    <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
-                                {% endif %}</li> {% endfor %}
-                    </ul>
-                {% else %}
-                    <strong>There are no categories present.</strong>
-                {% endif %}
-        </div>
+    <div class="blog-post">
+        {#        <div class="col-lg-6"><h4>Most Liked Categories</h4>#}
+        {#            <p>#}
+        {#                {% if categories %}#}
+        {#                    <ul class="list-group">#}
+        {#                        {% for category in categories %}#}
+        {#                            <li class="list-group-item"><a href="{% url 'rango:show_category' category.slug %}">#}
+        {#                                {{ category.name }}</a>#}
+        {#                                {% if category.likes > 1 %}#}
+        {#                                    <span class="badge badge-pill badge-primary"#}
+        {#                                          style="float: right">{{ category.likes }} likes</span>#}
+        {#                                {% elif category.likes == 1 %}#}
+        {#                                    <span class="badge badge-pill badge-primary"#}
+        {#                                          style="float: right">{{ category.likes }} like</span>#}
+        {#                                {% elif category.likes == 0 %}#}
+        {#                                    <span class="badge badge-pill badge-primary" style="float: right">0 like</span>#}
+        {#                                {% endif %}#}
+        {#                            </li> {% endfor %}#}
+        {#                    </ul>#}
+        {#                {% else %}#}
+        {#                    <strong>There are no categories present.</strong> {% endif %}#}
+        {#            </p>#}
+        {#        </div>#}
+        {% if pages %}
+            {% for page in pages %}
+                <h2 class="blog-post-title">{{ page.title }}</h2>
+                {#                <ol class="list-unstyled"><a href="{{ page.url }}"></a>#}
+                <p class="blog-post-meta">
+                    {% if page.views > 1 %}
+                        <span class="badge badge-pill badge-primary"
+                              style="float: right">{{ page.views }} views</span>
+                    {% elif page.views == 1 %}
+                        <span class="badge badge-pill badge-primary"
+                              style="float: right">{{ page.views }} view</span>
+                    {% elif page.views == 0 %}
+                        <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
+                    {% endif %}
+                </p>
+                <br/>
+                {#                </ol>#}
+                <div>
+                    {{ page.content }}
+                </div>
+                <hr/>
+            {% endfor %}
+
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
     </div>
+
     <img src="{% static "images/l.jpg" %}" alt="Picture of Rango"/>
 {% endblock %}

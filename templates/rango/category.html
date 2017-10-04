@@ -20,20 +20,22 @@
         <br/>
         <div>
         {% if pages %}
-            <ul class="list-group">
+            <ol class="list-unstyled">
                 {% for page in pages %}
-                    <li class="list-group-item">
+                    <li>
                         <a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
                         {% if page.views > 1 %}
-                            <span class="badge badge-pill badge-primary">{{ page.views }} views</span>
+                            <span class="badge badge-pill badge-primary"
+                                  style="float: right">{{ page.views }} views</span>
                         {% elif page.views == 1 %}
-                            <span class="badge badge-pill badge-primary">{{ page.views }} view</span>
+                            <span class="badge badge-pill badge-primary"
+                                  style="float: right">{{ page.views }} view</span>
                         {% elif page.views == 0 %}
-                            <span class="badge badge-pill badge-primary">0 view</span>
+                            <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
                         {% endif %}
                     </li>
                 {% endfor %}
-            </ul>
+            </ol>
         {% else %}
             <strong>No pages currently in category.</strong>
         {% endif %}

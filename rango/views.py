@@ -50,6 +50,7 @@ def index(request):
     # context = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
     # return HttpResponse("Rango says hey there partner! <br/> <a href='/rango/about/'>About</a>")
     response = render(request, 'rango/index.html', context=category_dict)
+    print(response)
     return response
 
 

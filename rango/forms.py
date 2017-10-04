@@ -17,6 +17,7 @@ class CategoryForm(forms.ModelForm):
 class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="please enter the title pf the page.")
     url = forms.URLField(max_length=200, help_text="please enter URL of the page.")
+    content = forms.Textarea()
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
@@ -41,8 +42,14 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password', 'email')
 
 
-class UserProfileForm(forms.ModelForm):
+# class ArticleForm(forms.ModelForm):
+#     title = forms.CharField(max_length=128)
+#     body = forms.Textarea(max_length=1000)
+#     class Meta:
+#         model = Article
+#         exclude = ('category',)
 
+class UserProfileForm(forms.ModelForm):
     website = forms.URLField(required=False)
     picture = forms.ImageField(required=False)
 

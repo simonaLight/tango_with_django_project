@@ -13,6 +13,7 @@ def populate():
     python_pages = [
         {'title': 'Official Python Tutorial',
          'url': "http://docs.python.org/2/tutorial/",
+         'content': "你是世界上最好的人",
          'views_page': 128},
         {'title': 'How to Think like a Computer Scientist',
          'url': "http://www.greenteapress.com/thinkpython/",
@@ -50,7 +51,7 @@ def populate():
     for cat, cat_data in cats.items():
         c = add_cat(cat, cat_data['views'], cat_data['likes'])
         for p in cat_data['pages']:
-            add_page(c, p['title'], p['url'], p['views_page'])
+            add_page(c, p['title'], p['url'], p['content'], p['views_page'])
 
     for c in Category.objects.all():
         for p in Page.objects.filter(category=c):
@@ -65,7 +66,7 @@ def add_cat(name, views, likes):
     return c
 
 
-def add_page(cat, title, url, views=0):
+def add_page(cat, title, url, content, views=0):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
     print(p)
     p.url = url
