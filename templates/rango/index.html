@@ -31,6 +31,7 @@
             {% for page in pages %}
                 <h2 class="blog-post-title">{{ page.title }}</h2>
                 {#                <ol class="list-unstyled"><a href="{{ page.url }}"></a>#}
+                <p class="blog-post-meta">{{ page.pub_time }}</p>
                 <p class="blog-post-meta">
                     {% if page.views > 1 %}
                         <span class="badge badge-pill badge-primary"
@@ -49,11 +50,11 @@
                 </div>
                 <hr/>
             {% endfor %}
-
         {% else %}
             <strong>There are no categories present.</strong>
         {% endif %}
+        <nav class="blog-pagination">
+            <a class="btn btn-outline-primary" href="#">Older</a>
+        </nav>
     </div>
-
-    <img src="{% static "images/l.jpg" %}" alt="Picture of Rango"/>
 {% endblock %}

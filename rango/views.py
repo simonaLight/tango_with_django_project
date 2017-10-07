@@ -40,9 +40,10 @@ def visitor_cookie_handler(request):
 
 def index(request):
     # request.session.set_test_cookie()
-    category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = Page.objects.order_by('-views')[:5]
-    category_dict = {'categories': category_list, 'pages': pages_list}
+    # category_list = Category.objects.order_by('-likes')[:5]
+    pages_list = Page.objects.order_by('-pub_time')[:5]
+    # category_dict = {'categories': category_list, 'pages': pages_list}
+    category_dict = {'pages': pages_list}
     visitor_cookie_handler(request)
     # category_dict['visits'] = request.COOKIES.get('visits')
     category_dict['visits'] = request.session['visits']
