@@ -1,0 +1,26 @@
+{% extends 'rango/base_bootstrap.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+    <h2>{{ page.title }}</h2>
+    <strong>{{ page.pub_time }}</strong>
+    <hr/>
+    <div>{{ page.content }}</div>
+    <br/>
+    <hr/>
+    <strong>评论区:</strong>
+    {% if comments %}
+        {% for comment in comments %}
+            <p>姓名:{{ comment.name }}</p>
+            <p>邮箱:{{ comment.email }}</p>
+            <p>评论内容:{{ comment.content }}</p>
+            <p>评论时间:{{ comment.created }}</p>
+            <hr/>
+        {% endfor %}
+    {% else %}
+       <strong>There No Comment in here! You can be the NO.1!</strong>
+    {% endif %}
+    <nav class="blog-pagination">
+        <a class="btn btn-outline-primary" href="{% url 'rango:comment' page.id%}">评论</a>
+    </nav>
+{% endblock %}

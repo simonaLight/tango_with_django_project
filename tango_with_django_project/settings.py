@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'tango_with_django_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangoBlog',
+        'NAME': 'djangoblog',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',

@@ -52,9 +52,9 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    name = forms.CharField(required=True)
-    email = forms.EmailField(required=True)
-    content = forms.CharField(required=True)
+    name = forms.CharField(required=True, max_length=16)
+    email = forms.EmailField(required=True, max_length=40)
+    content = forms.CharField(required=True, max_length=240)
 
     class Meta:
         model = Comment

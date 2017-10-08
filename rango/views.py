@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from rango.models import Category, Page, User, UserProfile
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.models import Category, Page, User, UserProfile, Comment
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from registration.backends.default.views import RegistrationView
@@ -188,21 +188,21 @@ def restricted(request):
 
 def track_url(request):
     page_id = None
-    url = '/rango/'
     if request.method == 'GET':
         print(request)
         if 'page_id' in request.GET:
             page_id = request.GET['page_id']
-            print(page_id)
             try:
                 page = Page.objects.get(id=page_id)
-                print(page)
+                comments = Comment.objects.filter(page_id=page_id)
+                print(comments)
                 page.views = page.views + 1
                 page.save()
-                url = page.url
             except Exception:
                 pass
-        return redirect(url)
+        return render(request, 'rango/page.html', {'page': page, 'comments': comments})
+
+
 
 
 @login_required
@@ -275,3 +275,27 @@ def like_category(request):
             cat.likes = likes
             cat.save()
     return HttpResponse(likes)
+
+
+@login_required
+def comment(request, page_id):
+    try:
+        page = Page.objects.get(id=page_id)
+        category = Category.objects.filter(id=page.category_id)
+        print(category)
+    except Page.DoesNotExist:
+        page = None
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            if page:
+                comment = form.save(commit=False)
+                comment.page = page
+                comment.save()
+                return index(request)
+            else:
+                print(form.errors)
+    else:
+        form = CommentForm()
+    context_dict = {'form': form, 'page': page}
+    return render(request, 'rango/comment.html', context_dict)

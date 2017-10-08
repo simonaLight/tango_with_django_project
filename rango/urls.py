@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^delete/(?P<username>[\w@\-]+)/$', views.user_delete, name='user_delete'),
     url(r'^profiles/$', views.list_profiles, name='list_profile'),
     url(r'^like/$', views.like_category, name='like_category'),
+    url(r'^comment/(?P<page_id>[\w]+)/$', views.comment, name='comment'),
     # url(r'^register/$', views.register, name='register'),
     # url(r'^login/$', views.user_login, name='login'),
     # url(r'^logout/$', views.log_out, name='logout'),

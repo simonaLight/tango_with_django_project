@@ -1,0 +1,23 @@
+{% extends 'rango/base_bootstrap.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if page %}
+        <h2>{{ page.title }}</h2>
+        <form method="post" action="{% url 'rango:comment' page.id%}">
+            {% csrf_token %}
+            {#            {% for field in form.visible_fields %}#}
+            {#                {{ field.errors }}#}
+            {#                {{ field.help_text }}<br/>#}
+            {#                {{ field }}<br/>#}
+            {#            {% endfor %}#}
+            <p>姓名：{{ form.name }}</p>
+            <p>email：{{ form.email }}</p>
+            <p>内容：{{ form.content }}</p>
+            <button class="btn btn-primary"
+                    type="submit" name="submit">
+                提交
+            </button>
+        </form>
+    {% endif %}
+{% endblock %}

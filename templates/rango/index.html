@@ -29,7 +29,8 @@
         {#        </div>#}
         {% if pages %}
             {% for page in pages %}
-                <h2 class="blog-post-title">{{ page.title }}</h2>
+                <h2 class="blog-post-title"><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
+                </h2>
                 {#                <ol class="list-unstyled"><a href="{{ page.url }}"></a>#}
                 <p class="blog-post-meta">{{ page.pub_time }}</p>
                 <p class="blog-post-meta">
