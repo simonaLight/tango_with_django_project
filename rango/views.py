@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, User, UserProfile, Comment
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CommentForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from registration.backends.default.views import RegistrationView
@@ -41,16 +42,29 @@ def visitor_cookie_handler(request):
 def index(request):
     # request.session.set_test_cookie()
     # category_list = Category.objects.order_by('-likes')[:5]
-    pages_list = Page.objects.order_by('-pub_time')[:5]
+    pages_list = Page.objects.order_by('-pub_time')
+    paginator = Paginator(pages_list, 5)
+    print(paginator)
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    # print(len(pages_list))
     # category_dict = {'categories': category_list, 'pages': pages_list}
-    category_dict = {'pages': pages_list}
+    # category_dict = {'pages': pages_list}
     visitor_cookie_handler(request)
     # category_dict['visits'] = request.COOKIES.get('visits')
-    category_dict['visits'] = request.session['visits']
-    category_dict['last_visit'] = datetime.strptime(request.session['last_visit'][:-7], "%Y-%m-%d %H:%M:%S")
+    # category_dict['visits'] = request.session['visits']
+    # category_dict['last_visit'] = datetime.strptime(request.session['last_visit'][:-7], "%Y-%m-%d %H:%M:%S")
     # context = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
     # return HttpResponse("Rango says hey there partner! <br/> <a href='/rango/about/'>About</a>")
-    response = render(request, 'rango/index.html', context=category_dict)
+    # response = render(request, 'rango/index.html', context=category_dict)
+    response = render(request, 'rango/index.html', {'contacts': contacts})
     print(response)
     return response
 
@@ -201,8 +215,6 @@ def track_url(request):
             except Exception:
                 pass
         return render(request, 'rango/page.html', {'page': page, 'comments': comments})
-
-
 
 
 @login_required

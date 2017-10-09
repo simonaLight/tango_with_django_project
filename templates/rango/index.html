@@ -27,35 +27,53 @@
         {#                    <strong>There are no categories present.</strong> {% endif %}#}
         {#            </p>#}
         {#        </div>#}
-        {% if pages %}
-            {% for page in pages %}
-                <h2 class="blog-post-title"><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
+        {% if contacts %}
+            {% for contact in contacts.object_list %}
+                <h2 class="blog-post-title"><a
+                        href="{% url 'rango:goto' %}?page_id={{ contact.id }}">{{ contact.title }}</a>
                 </h2>
-                {#                <ol class="list-unstyled"><a href="{{ page.url }}"></a>#}
-                <p class="blog-post-meta">{{ page.pub_time }}</p>
-                <p class="blog-post-meta">
-                    {% if page.views > 1 %}
-                        <span class="badge badge-pill badge-primary"
-                              style="float: right">{{ page.views }} views</span>
-                    {% elif page.views == 1 %}
-                        <span class="badge badge-pill badge-primary"
-                              style="float: right">{{ page.views }} view</span>
-                    {% elif page.views == 0 %}
-                        <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
-                    {% endif %}
-                </p>
-                <br/>
-                {#                </ol>#}
+                <ol class="list-unstyled"><a href="{{ contact.url }}"></a>
+                    <p class="blog-post-meta">{{ contact.pub_time }}</p>
+                    <p class="blog-post-meta">
+                        {% if page.views > 1 %}
+                            <span class="badge badge-pill badge-primary"
+                                  style="float: right">{{ contact.views }} views</span>
+                        {% elif page.views == 1 %}
+                            <span class="badge badge-pill badge-primary"
+                                  style="float: right">{{ contact.views }} view</span>
+                        {% elif page.views == 0 %}
+                            <span class="badge badge-pill badge-primary" style="float: right">0 view</span>
+                        {% endif %}
+                    </p>
+                    <br/>
+                </ol>
                 <div>
-                    {{ page.content }}
+                    {{ contact.content }}
                 </div>
                 <hr/>
             {% endfor %}
         {% else %}
             <strong>There are no categories present.</strong>
         {% endif %}
+        {#        {% for contact in contacts.object_list %}#}
+        {# Each "contact" is a Contact model object. #}
+        {#            {{ contact.full_name|upper }}<br/>#}
+        {#        {% endfor %}#}
+
         <nav class="blog-pagination">
-            <a class="btn btn-outline-primary" href="#">早期文章</a>
+            {#            <span class="step-links">#}
+            {% if contacts.has_previous %}
+                <a class="btn btn-outline-primary" href="?page={{ contacts.previous_page_number }}">上一页</a>
+            {% endif %}
+
+            <span class="current">
+                    Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                </span>
+
+            {% if contacts.has_next %}
+                <a class="btn btn-outline-primary" href="?page={{ contacts.next_page_number }}">下一页</a>
+            {% endif %}
+            {#            </span>#}
         </nav>
     </div>
 {% endblock %}
