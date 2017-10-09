@@ -1,10 +1,14 @@
+{#{% extends 'rango/base_bootstrap.html' %}#}
+{% load staticfiles %}
+
 <div class="sidebar-module">
-    <h4>分类</h4>
+    <h3>Category</h3>
     <ol class="list-unstyled">
         {% if cats %}
             {% for c in cats %}
                 {% if c == act_cat %}
-                    <li><strong><a href="{% url 'rango:show_category' c.slug %}" style="float: inherit">{{ c.name }}</a></strong>
+                    <li><h4><a href="{% url 'rango:show_category' c.slug %}" style="float: inherit">{{ c.name }}</a>
+                    </h4>
                     </li>
                 {% else %}
                     <li><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></li>
